@@ -1,6 +1,6 @@
 # CLASS_EDE: CLASS for Early Dark Energy
 
-![](https://github.com/mwt5345/class_ede/blob/master/fEDE_v_z.png) <!-- .element height="10%" width="10%" -->
+![](https://github.com/mwt5345/class_ede/blob/master/class/figures-for-paper/scf/fEDE-example.pdf) <!-- .element height="10%" width="10%" -->
 
 ## Class edited by
 - J. Colin Hill; jch2200 at columbia.edu
