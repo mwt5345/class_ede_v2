@@ -1,5 +1,9 @@
 # CLASS_EDE: CLASS for Early Dark Energy
 
+A modified version of the publicly available Einstein-Boltzmann code [CLASS](https://github.com/lesgourg/class_public) to implement Early Dark Energy (EDE). CLASS_EDE solves for the evolution of the scalar field perturbations directly using the perturbed Klein-Gordon equation and implements adiabatic initial conditions for the scalar field fluctuations. The code allows one to specify the EDE model parameters in terms of the particle physics parameters *f* and *m* or effective EDE parameters *f_EDE* and *z_c*.
+
+See Hill et al. (2020) where CLASS_EDE is implemented to test the validity of the EDE model. 
+
 ![](https://github.com/mwt5345/class_ede/blob/master/class/figures-for-paper/scf/fEDE_v_z.png) <!-- .element height="10%" width="10%" -->
 
 ## CLASS edited by
