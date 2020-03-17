@@ -1,4 +1,4 @@
-![https://arxiv.org/abs/2003.07355](https://img.shields.io/badge/arXiv-2003.07355%20-red.svg)
+[![](https://img.shields.io/badge/arXiv-2003.07355%20-red.svg)](https://arxiv.org/abs/2003.07355)
 
 # CLASS_EDE: CLASS for Early Dark Energy
 
