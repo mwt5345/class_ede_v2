@@ -134,8 +134,8 @@
  * temporary parameters for background fzero function
  */
 
-/* EDE-edit: add fEDE and z_c */
-enum target_names {theta_s, Omega_dcdmdr, omega_dcdmdr, Omega_scf, Omega_ini_dcdm, omega_ini_dcdm, sigma8,tn_fEDE,tn_z_c};
+/* EDE-edit: add fEDE and z_c (the order is important for speed) */
+enum target_names {tn_fEDE,tn_z_c,theta_s, Omega_dcdmdr, omega_dcdmdr, Omega_scf, Omega_ini_dcdm, omega_ini_dcdm, sigma8};
 enum computation_stage {cs_background, cs_thermodynamics, cs_perturbations,
                         cs_primordial, cs_nonlinear, cs_transfer, cs_spectra};
 #define _NUM_TARGETS_ 9 //Keep this number as number of target_names
