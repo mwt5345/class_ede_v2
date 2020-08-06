@@ -281,13 +281,13 @@ int input_init(
    *
    */
 
-      /* EDE-edit: include fEDE and zc */
-  char * const target_namestrings[] = {"100*theta_s","Omega_dcdmdr","omega_dcdmdr",
-                                       "Omega_scf","Omega_ini_dcdm","omega_ini_dcdm","sigma8","fEDE","log10z_c"};
-  char * const unknown_namestrings[] = {"h","Omega_ini_dcdm","Omega_ini_dcdm",
-                                        "scf_shooting_parameter","Omega_dcdmdr","omega_dcdmdr","A_s","log10f_scf","log10m_scf"};
-  enum computation_stage target_cs[] = {cs_thermodynamics, cs_background, cs_background,
-                                        cs_background, cs_background, cs_background, cs_nonlinear,cs_background,cs_background};
+      /* EDE-edit: include fEDE and zc (order is important here for speed of shooting) */
+  char * const target_namestrings[] = {"fEDE","log10z_c","100*theta_s","Omega_dcdmdr","omega_dcdmdr",
+                                       "Omega_scf","Omega_ini_dcdm","omega_ini_dcdm","sigma8"};
+  char * const unknown_namestrings[] = {"log10f_scf","log10m_scf","h","Omega_ini_dcdm","Omega_ini_dcdm",
+                                        "scf_shooting_parameter","Omega_dcdmdr","omega_dcdmdr","A_s"};
+  enum computation_stage target_cs[] = {cs_background, cs_background, cs_thermodynamics, cs_background,
+                                        cs_background, cs_background, cs_background, cs_background, cs_nonlinear};
 /* END EDE-edit */
     
   int input_verbose = 0, int1, aux_flag, shooting_failed=_FALSE_;
