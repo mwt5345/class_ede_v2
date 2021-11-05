@@ -4793,17 +4793,13 @@ int perturb_initial_conditions(struct precision * ppr,
         ppw->pv->y[ppw->pv->index_pt_phi_prime_scf] = 0.;
 */
           /*  *** EDE-edit: *** */
-          /* From appendix B of Smith et al. */
+          
           /* We apply adiabatic initial conditions. We take \phi'(0) to be the slow-roll value, not the value naively read in by CLASS. (which we take to be 0 in all our runs). */
           
 
-           /* To-do: replace k/.05 by k/ppm->k_pivot. */
+          ppw->pv->y[ppw->pv->index_pt_phi_scf] = (ppw->pvecback[pba->index_bg_dV_scf]*pow(pba->H0,2.)*pow(ktau_three,2.)*(ppr->curvature_ini*s2_squared)*(4.15e-5*pow(pba->h,-2.)))/(210. * pow(k,4.));
 
-          ppw->pv->y[ppw->pv->index_pt_phi_scf] =1.*(1/210)*pow(ktau_three,2)*(1/pow(k,4))*(1/pow(ppw->pvecback[pba->index_bg_a],4))*pow(2,1/2)*3.14159*pow(pba->A_s_ICs,1/2)*pow(k/.05,(pba->n_s_ICs-1)/2)*pow(k,-3/2)*pow(pba->H0,2)*ppw->pvecback[pba->index_bg_dV_scf]*ppw->pvecback[pba->index_bg_Omega_r];
-          
-        /* Note: We take Omega_r=4.15e-5*pow(pba->h,-2) in Smith et al. expression for slow-roll solution */
-          
-          ppw->pv->y[ppw->pv->index_pt_phi_prime_scf] = (pow(a,2)*5.*pow(k,3)/(pow(pba->H0,2)*ktau_three*4.15e-5*pow(pba->h,-2)))*(1.*(1/210)*pow(ktau_three,2)*(1/pow(k,4))*(1/pow(ppw->pvecback[pba->index_bg_a],4))*pow(2,1/2)*3.14159*pow(pba->A_s_ICs,1/2)*pow(k/.05,(pba->n_s_ICs-1)/2)*pow(k,-3/2)*pow(pba->H0,2)*ppw->pvecback[pba->index_bg_dV_scf]*4.15e-5*pow(pba->h,-2))  +  pow(a,2)*ppw->pvecback[pba->index_bg_V_scf]*sqrt(pba->A_s_ICs*pow(k/.05,pba->n_s_ICs)*.05)*pow(ktau_three,3)*3.14/(105*sqrt(2)*pow(k,3))                              + pow(ppw->pvecback[pba->index_bg_dV_scf],3)*pow(pba->H0,4)*sqrt(pba->A_s_ICs*pow(k/.05,pba->n_s_ICs)*.05*1/(pow(k,4.)))*pow(ktau_three,3)*3.14*pow(4.15e-5*pow(pba->h,-2),2.)/(5250.*sqrt(2.)*pow(k,7)*ppw->pvecback[pba->index_bg_V_scf]);
+          ppw->pv->y[ppw->pv->index_pt_phi_prime_scf] = (pow(a,2.)*ppw->pvecback[pba->index_bg_dV_scf]*ktau_three*(ppr->curvature_ini*s2_squared))/(35.*k) + (pow(ppw->pvecback[pba->index_bg_dV_scf],3.)*pow(pba->H0,4.)*pow(ktau_three,3.)*(ppr->curvature_ini*s2_squared)*pow(4.15e-5*pow(pba->h,-2.),2.))/(10500. * pow(k,7.) * ppw->pvecback[pba->index_bg_V_scf]);
 
           
       }
