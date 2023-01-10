@@ -3699,20 +3699,9 @@ int input_try_unknown_parameters(double * unknown_parameter,
       printf("fEDE target_value = %e\n", pfzw->target_value[i]); */
       break;
     case tn_z_c:
-      /* EDE-edit: snap target value z_c to computed z-grid. Note: index=0 is initial time, index=bt_size-1 is today. */
-      jj=0;
-      z_c_target=ba.z_table[0];
-      while (ba.z_table[jj] > pow(10.,pfzw->target_value[i])){
-          z_c_target=ba.z_table[jj];
-          jj++;
-      }
-      //output[i] = ba.log10z_c-pfzw->target_value[i];
-      output[i] = ba.log10z_c-log10(z_c_target);
-      /*printf("ba.log10z_c = %e\n",ba.log10z_c);
-      printf("zc target value = %e\n", pfzw->target_value[i]);
-      printf("log10(z_c_target_grid) = %e\n",log10(z_c_target)); */
+      // EDE-edit: do not snap!
+      output[i] = ba.log10z_c - pfzw->target_value[i];
       break;
-
     }
   }
 

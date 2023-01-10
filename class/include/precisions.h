@@ -16,7 +16,7 @@ class_precision_parameter(a_ini_over_a_today_default,double,1.e-14)
  */
 /* EDE-edit: upped precision from 7e-3 --> 7.e-4*/
 /* class_precision_parameter(back_integration_stepsize,double,7.e-3) */
-class_precision_parameter(back_integration_stepsize,double,7.e-4)
+class_precision_parameter(back_integration_stepsize,double,7.e-3)
 /**
  * Tolerance of the background integration, giving the allowed relative integration error.
  */
