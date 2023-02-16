@@ -2219,51 +2219,48 @@ int background_find_equality(
 int background_find_f_and_zc(
                              struct precision *ppr,
                              struct background *pba) {
-    
-    double f = 0.;
+
+    // Find peak and index by simple loop. (Bisection could find local maxima.)
     double fmax = 0.;
-    double zc = 0.;
-    double VV_scf = 0.;
-    double scale = 0.;
-    double pphi_prime = 0;
-    double rrho_scf = 0;
-    int index_tau_minus = 0;
-    int index_tau_plus = pba->bt_size - 1;
-    int index_tau_mid = 0;
-    double tau_minus,tau_plus,tau_mid= 0.;
-    
-    /* first bracket the right tau value between two consecutive indices in the table */
-    
-    while ((index_tau_plus - index_tau_minus) > 1) {
-        
-        index_tau_mid = index_tau_minus;//(int)(0.5*(index_tau_plus+index_tau_minus));
-        
-        VV_scf = pba->background_table[index_tau_mid*pba->bg_size+pba->index_bg_V_e_scf];
-        scale = pba->background_table[index_tau_mid*pba->bg_size+pba->index_bi_a];
-        pphi_prime = pba->background_table[index_tau_mid*pba->bg_size+pba->index_bg_phi_prime_scf];
-        
-        rrho_scf = (pphi_prime*pphi_prime/(2*scale*scale) + VV_scf)/3.;
-        
-        f = rrho_scf / pba->background_table[index_tau_mid*pba->bg_size+pba->index_bg_rho_crit];
-        
-        if (f > fmax){
-            fmax = (double)f;
-            zc = (double)(1./(scale) - 1);
-            //tau_mid = index_tau_mid;
-            index_tau_minus = index_tau_mid + 1;
+    int index_fmax = 1;
+    for (int index_tau = 1; index_tau < pba->bt_size - 1; ++index_tau) {
+        double VV_scf = pba->background_table[index_tau*pba->bg_size+pba->index_bg_V_e_scf];
+        double scale = pba->background_table[index_tau*pba->bg_size+pba->index_bg_a];
+        double pphi_prime = pba->background_table[index_tau*pba->bg_size+pba->index_bg_phi_prime_scf];
+        double rrho_scf = (pphi_prime*pphi_prime/(2*scale*scale) + VV_scf)/3.;
+        double f = rrho_scf / pba->background_table[index_tau*pba->bg_size+pba->index_bg_rho_crit];
+        if (f > fmax) {
+            fmax = f;
+            index_fmax = index_tau;
         }
-        else{
-            index_tau_minus = index_tau_mid + 1;
-        }
-        
     }
-    
-    pba->z_c = zc;
+
+    // Construct the interpolating parabola p(x) using a point on each side of the peak.
+    // e.g. p = InterpolatingPolynomial[{{xm, fm}, {xj, fj}, {xp, fp}}, x]
+    double xm = pba->z_table[index_fmax - 1];
+    double xj = pba->z_table[index_fmax];
+    double xp = pba->z_table[index_fmax + 1];
+    double fvec[3];
+    for (int del = -1; del < 2; ++del) {
+        int index_tau = index_fmax + del;
+        double VV_scf = pba->background_table[index_tau*pba->bg_size+pba->index_bg_V_e_scf];
+        double scale = pba->background_table[index_tau*pba->bg_size+pba->index_bg_a];
+        double pphi_prime = pba->background_table[index_tau*pba->bg_size+pba->index_bg_phi_prime_scf];
+        double rrho_scf = (pphi_prime*pphi_prime/(2*scale*scale) + VV_scf)/3.;
+        fvec[1 + del] = rrho_scf / pba->background_table[index_tau*pba->bg_size+pba->index_bg_rho_crit];
+    }
+    double fm = fvec[0];
+    double fj = fvec[1];
+    double fp = fvec[2];
+    double z_c = (fp*(xj - xm)*(xj + xm) + fj*(xm - xp)*(xm + xp) + fm*(-pow(xj,2) + pow(xp,2)))/(2.*(fp*(xj - xm) + fj*(xm - xp) + fm*(-xj + xp)));
+    fmax = fm + pow(-(fp*pow(xj - xm,2)) + fj*pow(xm - xp,2) + fm*(xj - xp)*(xj - 2*xm + xp),2)/(4.*(xj - xm)*(xj - xp)*(xm - xp)*(fp*(-xj + xm) + fm*(xj - xp) + fj*(-xm + xp)));
+
+    pba->z_c = z_c;
     pba->fEDE = fmax;
     pba->thetai_scf = pba->scf_parameters[4];
     /* EDE-edit: added log10zc */
     /* pba->log10z_c = log10(zc); */
-    pba->log10z_c = log10(zc);
+    pba->log10z_c = log10(z_c);
     pba->log10m_scf=log10(pba->scf_parameters[2]);
     pba->log10f_scf=log10(pba->scf_parameters[1]);
     
