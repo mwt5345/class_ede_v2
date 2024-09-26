@@ -1,6 +1,6 @@
 [![](https://img.shields.io/badge/arXiv-2003.07355%20-red.svg)](https://arxiv.org/abs/2003.07355)
 
-This version of class_ede is now outdated. The lastest version is available [here](https://github.com/mwt5345/class_ede).
+### This version of class_ede is now outdated. The lastest version is available [here](https://github.com/mwt5345/class_ede).
 
 # CLASS_EDE: CLASS for Early Dark Energy
 
